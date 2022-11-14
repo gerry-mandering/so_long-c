@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:58:41 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/13 21:51:52 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/14 10:34:20 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	validate_file_name(char *file_name)
 	if (ft_memcmp(file_name + (len - extension_len), ".ber", 4) != 0)
 		ft_exit("wrong file name\nError", STDERR_FILENO, EXIT_FAILURE);
 }
-
-
 
 static void	remove_new_line(char *line)
 {

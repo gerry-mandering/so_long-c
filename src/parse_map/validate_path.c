@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:42:58 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/13 21:50:55 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:56:08 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ static void	check_flooded(char **arr_map, t_coord *map_size)
 	}
 }
 
+static void	free_arr_map(char **arr_map, t_coord *map_size)
+{
+	int	i;
+
+	i = 0;
+	while (i < map_size->col)
+	{
+		ft_free(*(arr_map + i));
+		i++;
+	}
+	ft_free(arr_map);
+}
+
 void	validate_path(t_list *list_map)
 {
 	char	**arr_map;
@@ -83,5 +96,5 @@ void	validate_path(t_list *list_map)
 	//Fix!
 	print_map(arr_map, &map_size);
 	check_flooded(arr_map, &map_size);
-	ft_free(arr_map);
+	free_arr_map(arr_map, &map_size);
 }
