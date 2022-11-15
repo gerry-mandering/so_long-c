@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:42:58 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/14 13:56:08 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:40:22 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	validate_path(t_list *list_map)
 	copy_map_to_arr(&arr_map, list_map, &map_size);
 	get_start_coord(&start_coord, arr_map, &map_size);
 	flood_fill(arr_map, start_coord.col, start_coord.row, &map_size);
-	//Fix!
-	print_map(arr_map, &map_size);
 	check_flooded(arr_map, &map_size);
 	free_arr_map(arr_map, &map_size);
 }

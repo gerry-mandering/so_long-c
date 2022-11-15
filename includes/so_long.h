@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:14:39 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/14 20:14:48 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:29:08 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,45 @@
 # include "../library/mlx/mlx.h"
 # include "../library/doubly_linked_list/includes/doubly_linked_list.h"
 
-# define NOT_EXIST	0
-# define EXIST		1
+# define KEY_PRESS		2
+# define KEY_RELEASE	3
 
-# define SIGN		0
-# define FENCE		1
-# define BUSH		2
-# define ROCK		3
+# define KEY_ESC		53
+# define KEY_W			13
+# define KEY_A			0
+# define KEY_S			1
+# define KEY_D			2
+
+# define NOT_EXIST		0
+# define EXIST			1
+
+# define IDX_SIGN		0
+# define IDX_FENCE		1
+# define IDX_BUSH		2
+# define IDX_ROCK		3
+
+# define PLAYER			'P'
+# define COLLECTIBLE	'C'
+# define EXIT			'E'
+
+# define UP_LEFT		'q'
+# define UP_RIGHT		'p'
+# define DOWN_LEFT		'z'
+# define DOWN_RIGHT		'm'
+
+# define LEFT_SIDE		'a'
+# define RIGHT_SIDE		'l'
+# define UP_SIDE		't'
+# define DOWN_SIDE		'v'
+
+# define TREE_UP		'u'
+# define TREE_MID		'j'
+# define TREE_DOWN		'n'
+
+# define SIGN			's'
+# define FENCE			'd'
+# define BUSH			'x'
+# define ROCK			'c'
 
 typedef struct s_ptr
 {
@@ -56,7 +88,7 @@ typedef struct s_coord
 	int	row;
 }	t_coord;
 
-struct s_character_pack
+struct s_character
 {
 	void	*up[3];
 	void	*down[3];
@@ -64,7 +96,7 @@ struct s_character_pack
 	void	*right[3];
 };
 
-struct s_wall_pack
+struct s_wall
 {
 	void	*up_left;
 	void	*up_center;
@@ -76,7 +108,7 @@ struct s_wall_pack
 	void	*down_right;
 };
 
-struct s_object_pack
+struct s_object
 {
 	void	*tree_top;
 	void	*tree_middle;
@@ -84,21 +116,28 @@ struct s_object_pack
 	void	*others[4];
 };
 
-typedef struct s_img_pack
+typedef struct s_assets
 {
-	struct s_wall_pack		wall;
-	void					*tile;
-	struct s_character_pack	character;
-	struct s_object_pack	object;
-	void					*collectible;
-	void					*exit;
-	int						width;
-	int						height;
-}	t_img_pack;
+	struct s_wall		wall;
+	void				*tile;
+	struct s_character	character;
+	struct s_object		object;
+	void				*collectible;
+	void				*exit;
+	int					width;
+	int					height;
+}	t_assets;
+
+typedef struct s_pack
+{
+	t_coord		map_size;
+	char		**arr_map;
+	t_ptr		ptr;
+	t_assets	assets;
+}	t_pack;
 
 // map_util
 void	copy_map_to_arr(char ***arr_map, t_list *list_map, t_coord *map_size);
-void	move_map_to_arr(char ***arr_map, t_list *list_map, t_coord *map_size);
 void	get_map_size(t_coord *map_size, t_list *list_map);
 //FIX!!!
 void	print_map(char **arr_map, t_coord *map_size);

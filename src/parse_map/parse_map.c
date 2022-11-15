@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:58:41 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/14 10:34:20 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:46:46 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	parse_map(t_list *list_map, int argc, char **argv)
 		ft_exit("wrong arguments count\nError", STDERR_FILENO, EXIT_FAILURE);
 	validate_file_name(argv[1]);
 	fd = ft_open(argv[1], O_RDONLY);
+	init_list(list_map);
 	current_node = list_map->head->next;
 	while (1)
 	{
