@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 15:14:39 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/15 21:29:08 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/16 18:30:06 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@
 # define IDX_BUSH		2
 # define IDX_ROCK		3
 
+# define ROAD			'0'
 # define PLAYER			'P'
+
+# define PLAYER_UP		'1'
+# define PLAYER_DOWN	'2'
+# define PLAYER_LEFT	'3'
+# define PLAYER_RIGHT	'4'
+
 # define COLLECTIBLE	'C'
 # define EXIT			'E'
 
@@ -134,6 +141,8 @@ typedef struct s_pack
 	char		**arr_map;
 	t_ptr		ptr;
 	t_assets	assets;
+	t_coord		player_coord;
+	int			move_count;
 }	t_pack;
 
 // map_util
