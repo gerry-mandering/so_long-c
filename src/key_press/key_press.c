@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
+/*   key_press.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 22:59:26 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 02:56:04 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/17 07:34:49 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/17 07:41:20 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-void	validate_map(t_list *map_lst)
+int	key_press(int keycode, t_game *game)
 {
-	char		**map;
-	const t_idx	map_size = get_map_size(map_lst);
-
-	validate_rectangular_shape(map_lst, map_size);
-	map = copy_map_to_char_array(map_lst, map_size);
-	validate_components(map, map_size);
-	validate_surrounding_wall(map, map_size);
-	validate_path(map, map_size);
-	free_char_map(map, map_size);
+	if (keycode == KEY_W)
+		move_player_up(game, game->map, &game->player_pos);
+	if (keycode == KEY_S)
+		move_player_down(game, game->map, &game->player_pos);
+	if (keycode == KEY_A)
+		move_player_left(game, game->map, &game->player_pos);
+	if (keycode == KEY_D)
+		move_player_right(game, game->map, &game->player_pos);
+	if (keycode == KEY_ESC)
+		close_game(game);
+	return (0);
 }

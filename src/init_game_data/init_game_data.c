@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   init_game_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 21:38:33 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 10:33:14 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/17 01:53:05 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/17 11:08:15 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
-int	main(int argc, char **argv)
+void	init_game_data(t_game *game)
 {
-	t_game	game;
-
-	init_list(&game.map_lst);
-	parse_map(&game.map_lst, argc, argv);
-	init_game_data(&game);
-	print_map(&game, game.map_size);
-	mlx_hook(game.win_ptr, KEY_PRESS, 0, key_press, &game);
-	mlx_loop_hook(game.mlx_ptr, collectible_floating_motion, &game);
-	mlx_loop(game.mlx_ptr);
-	return (0);
+	init_map_size(game);
+	init_map(game);
+	init_player_position(game);
+	init_collectible_count(game);
+	init_mlx_pointer(game);
+	init_img_pointer(game);
+	init_move_count(game);
 }

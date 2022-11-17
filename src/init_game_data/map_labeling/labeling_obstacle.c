@@ -1,28 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_rectangular_shape.c                       :+:      :+:    :+:   */
+/*   labeling_obstacle.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 23:32:11 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 01:27:45 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/17 02:37:28 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/17 02:57:36 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/so_long.h"
+#include "../../../includes/so_long.h"
 
-void	validate_rectangular_shape(t_list *map_lst, const t_idx map_size)
+static int	get_obstacle_in_order(void)
 {
+	static int	count;
+	const int	obstacle_arr[4] = {SIGN, FENCE, BUSH, ROCK};
+
+	return (obstacle_arr[count++ % 4]);
+}
+
+void	labeling_obstacle(int **map, t_list *map_lst)
+{
+	t_idx	idx;
 	t_node	*current_node;
 
+	ft_memset(&idx, 0, sizeof(t_idx));
 	current_node = map_lst->head->next;
-	if (map_size.row < 3 || map_size.col < 3)
-		ft_exit("wrong map\nError", STDERR_FILENO, EXIT_FAILURE);
 	while (current_node->next != NULL)
 	{
-		if ((int)ft_strlen(current_node->line) != map_size.col)
-			ft_exit("wrong map\nError", STDERR_FILENO, EXIT_FAILURE);
+		idx.col = 0;
+		while (current_node->line[idx.col])
+		{
+			if (map[idx.row][idx.col] == 0 && \
+					current_node->line[idx.col] == C_WALL)
+				map[idx.row][idx.col] = get_obstacle_in_order();
+			idx.col++;
+		}
+		idx.row++;
 		current_node = current_node->next;
 	}
 }

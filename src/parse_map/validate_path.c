@@ -5,94 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 21:42:58 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/15 18:40:22 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/17 01:05:55 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/17 01:35:59 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-static void	get_start_coord(t_coord *start_coord, \
-		char **arr_map, t_coord *map_size)
+static t_idx	get_player_position(char **map, const t_idx map_size)
 {
-	int	i;
-	int	j;
+	t_idx	player_pos;
 
-	i = 0;
-	while (i < map_size->col)
+	ft_memset(&player_pos, 0, sizeof(t_idx));
+	while (player_pos.row < map_size.row)
 	{
-		j = 0;
-		while (arr_map[i][j] != '\0')
+		player_pos.col = 0;
+		while (player_pos.col < map_size.col)
 		{
-			if (arr_map[i][j] == 'P')
-			{
-				start_coord->col = i;
-				start_coord->row = j;
-			}
-			j++;
+			if (map[player_pos.row][player_pos.col] == C_PLAYER)
+				return (player_pos);
+			player_pos.col++;
 		}
-		i++;
+		player_pos.row++;
 	}
+	return (player_pos);
 }
 
-static void	flood_fill(char **arr_map, int col, int row, t_coord *map_size)
+static void	flood_fill(char **map, int row, int col, const t_idx map_size)
 {
-	if (col < 0 || row < 0)
+	if (row < 0 || col < 0)
 		return ;
-	else if (col == map_size->col || row == map_size->row)
+	else if (row == map_size.row || col == map_size.col)
 		return ;
-	else if (arr_map[col][row] == '1' || arr_map[col][row] == 'F')
+	else if (map[row][col] == C_WALL || map[row][col] == C_FLOODED)
 		return ;
-	arr_map[col][row] = 'F';
-	flood_fill(arr_map, col - 1, row, map_size);
-	flood_fill(arr_map, col + 1, row, map_size);
-	flood_fill(arr_map, col, row - 1, map_size);
-	flood_fill(arr_map, col, row + 1, map_size);
+	map[row][col] = C_FLOODED;
+	flood_fill(map, row - 1, col, map_size);
+	flood_fill(map, row + 1, col, map_size);
+	flood_fill(map, row, col - 1, map_size);
+	flood_fill(map, row, col + 1, map_size);
 }
 
-static void	check_flooded(char **arr_map, t_coord *map_size)
+static void	check_flooded(char **map, const t_idx map_size)
 {
-	int	i;
-	int	j;
+	t_idx	idx;
 
-	i = 0;
-	while (i < map_size->col)
+	ft_memset(&idx, 0, sizeof(t_idx));
+	while (idx.row < map_size.row)
 	{
-		j = 0;
-		while (j < map_size->row)
+		idx.col = 0;
+		while (idx.col < map_size.col)
 		{
-			if (arr_map[i][j] == 'E' || arr_map[i][j] == 'C')
+			if (map[idx.row][idx.col] == C_COLLECTIBLE || \
+					map[idx.row][idx.col] == C_EXIT)
 				ft_exit("no valid path\nError", STDERR_FILENO, EXIT_FAILURE);
-			j++;
+			idx.col++;
 		}
-		i++;
+		idx.row++;
 	}
 }
 
-static void	free_arr_map(char **arr_map, t_coord *map_size)
+void	validate_path(char **map, const t_idx map_size)
 {
-	int	i;
+	t_idx	player_pos;
 
-	i = 0;
-	while (i < map_size->col)
-	{
-		ft_free(*(arr_map + i));
-		i++;
-	}
-	ft_free(arr_map);
-}
-
-void	validate_path(t_list *list_map)
-{
-	char	**arr_map;
-	t_coord	map_size;
-	t_coord	start_coord;
-
-	arr_map = NULL;
-	get_map_size(&map_size, list_map);
-	copy_map_to_arr(&arr_map, list_map, &map_size);
-	get_start_coord(&start_coord, arr_map, &map_size);
-	flood_fill(arr_map, start_coord.col, start_coord.row, &map_size);
-	check_flooded(arr_map, &map_size);
-	free_arr_map(arr_map, &map_size);
+	player_pos = get_player_position(map, map_size);
+	flood_fill(map, player_pos.row, player_pos.col, map_size);
+	check_flooded(map, map_size);
 }

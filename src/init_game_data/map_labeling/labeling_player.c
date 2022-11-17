@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_rectangular_shape.c                       :+:      :+:    :+:   */
+/*   labeling_player.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 23:32:11 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 01:27:45 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/17 02:26:20 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/17 10:44:53 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/so_long.h"
+#include "../../../includes/so_long.h"
 
-void	validate_rectangular_shape(t_list *map_lst, const t_idx map_size)
+void	labeling_player(int **map, t_list *map_lst)
 {
+	t_idx	idx;
 	t_node	*current_node;
 
+	ft_memset(&idx, 0, sizeof(t_idx));
 	current_node = map_lst->head->next;
-	if (map_size.row < 3 || map_size.col < 3)
-		ft_exit("wrong map\nError", STDERR_FILENO, EXIT_FAILURE);
 	while (current_node->next != NULL)
 	{
-		if ((int)ft_strlen(current_node->line) != map_size.col)
-			ft_exit("wrong map\nError", STDERR_FILENO, EXIT_FAILURE);
+		idx.col = 0;
+		while (current_node->line[idx.col])
+		{
+			if (current_node->line[idx.col] == C_PLAYER)
+				map[idx.row][idx.col] = PLAYER;
+			idx.col++;
+		}
 		current_node = current_node->next;
+		idx.row++;
 	}
 }

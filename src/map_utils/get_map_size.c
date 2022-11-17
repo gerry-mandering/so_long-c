@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   get_map_size.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 21:38:33 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 10:33:14 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/16 23:03:27 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/16 23:22:37 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../../includes/so_long.h"
 
-int	main(int argc, char **argv)
+t_idx	get_map_size(t_list *map_lst)
 {
-	t_game	game;
+	t_idx	map_size;
+	t_node	*current_node;
 
-	init_list(&game.map_lst);
-	parse_map(&game.map_lst, argc, argv);
-	init_game_data(&game);
-	print_map(&game, game.map_size);
-	mlx_hook(game.win_ptr, KEY_PRESS, 0, key_press, &game);
-	mlx_loop_hook(game.mlx_ptr, collectible_floating_motion, &game);
-	mlx_loop(game.mlx_ptr);
-	return (0);
+	current_node = map_lst->head->next;
+	map_size.row = map_lst->size;
+	map_size.col = ft_strlen(current_node->line);
+	return (map_size);
 }

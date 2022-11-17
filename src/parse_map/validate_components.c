@@ -5,75 +5,72 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 21:36:27 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/13 21:40:20 by minseok2         ###   ########.fr       */
+/*   Created: 2022/11/17 00:40:12 by minseok2          #+#    #+#             */
+/*   Updated: 2022/11/17 01:13:45 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-static int	is_component(char c)
+static int	is_components(char c)
 {
-	if (c == '0' || c == '1' || c == 'C' || c == 'E' || c == 'P')
+	if (c == C_ROAD || c == C_WALL || c == C_COLLECTIBLE || \
+			c == C_EXIT || c == C_PLAYER)
 		return (1);
 	else
 		return (0);
 }
 
-static void	check_components_duplicate(t_components *components, char c)
+static void	lift_components_flag(t_components *components_flag, char c)
 {
-	if (c == '1')
-		components->wall |= EXIST;
-	else if (c == 'C')
-		components->collectibles |= EXIST;
-	else if (c == 'E')
+	if (c == C_ROAD)
+		components_flag->wall |= EXIST;
+	else if (c == C_COLLECTIBLE)
+		components_flag->collectible |= EXIST;
+	else if (c == C_EXIT)
 	{
-		if (components->exit == EXIST)
+		if (components_flag->exit == EXIST)
 			ft_exit("duplicate exits\nError", STDERR_FILENO, EXIT_FAILURE);
-		components->exit = EXIST;
+		components_flag->exit |= EXIST;
 	}
-	else if (c == 'P')
+	else if (c == C_PLAYER)
 	{
-		if (components->starting_position == EXIST)
-			ft_exit("duplicate starting_position\nError", \
-					STDERR_FILENO, EXIT_FAILURE);
-		components->starting_position = EXIST;
+		if (components_flag->player == EXIST)
+			ft_exit("duplicate players\nError", STDERR_FILENO, EXIT_FAILURE);
+		components_flag->player |= EXIST;
 	}
 }
 
-static void	check_components_exist(t_components *components)
+static void	check_all_components_exist(t_components *components_flag)
 {
-	if (components->wall == NOT_EXIST)
-		ft_exit("wall doesn't exist\nError", STDERR_FILENO, EXIT_FAILURE);
-	else if (components->collectibles == NOT_EXIST)
-		ft_exit("collectibles doesn't exist\nError", \
-				STDERR_FILENO, EXIT_FAILURE);
-	else if (components->exit == NOT_EXIST)
-		ft_exit("exit doesn't exist\nError", STDERR_FILENO, EXIT_FAILURE);
-	else if (components->starting_position == NOT_EXIST)
-		ft_exit("starting_position doesn't exist\nError", \
-				STDERR_FILENO, EXIT_FAILURE);
+	if (components_flag->wall == NOT_EXIST)
+		ft_exit("no wall in map\nError", STDERR_FILENO, EXIT_FAILURE);
+	else if (components_flag->collectible == NOT_EXIST)
+		ft_exit("no collectible in map\nError", STDERR_FILENO, EXIT_FAILURE);
+	else if (components_flag->exit == NOT_EXIST)
+		ft_exit("no exit in map\nError", STDERR_FILENO, EXIT_FAILURE);
+	else if (components_flag->player == NOT_EXIST)
+		ft_exit("no player in map\nError", STDERR_FILENO, EXIT_FAILURE);
 }
 
-void	validate_components(t_list *list_map)
+void	validate_components(char **map, const t_idx map_size)
 {
-	int				i;
-	t_components	components;
-	t_node			*current_node;
+	t_idx			idx;
+	t_components	components_flag;
 
-	ft_memset(&components, NOT_EXIST, sizeof(t_components));
-	current_node = list_map->head->next;
-	while (current_node->next != NULL)
+	ft_memset(&idx, 0, sizeof(t_idx));
+	ft_memset(&components_flag, NOT_EXIST, sizeof(t_components));
+	while (idx.row < map_size.row)
 	{
-		i = 0;
-		while ((current_node->line)[i])
+		idx.col = 0;
+		while (idx.col < map_size.col)
 		{
-			if (!is_component((current_node->line)[i]))
-				ft_exit("wrong component\nError", STDERR_FILENO, EXIT_FAILURE);
-			check_components_duplicate(&components, (current_node->line)[i]);
-			i++;
+			if (!is_components(map[idx.row][idx.col]))
+				ft_exit("wrong components\nError", STDERR_FILENO, EXIT_FAILURE);
+			lift_components_flag(&components_flag, map[idx.row][idx.col]);
+			idx.col++;
 		}
-		current_node = current_node->next;
+		idx.row++;
 	}
-	check_components_exist(&components);
+	check_all_components_exist(&components_flag);
 }
