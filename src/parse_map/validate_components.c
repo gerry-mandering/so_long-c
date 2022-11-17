@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 00:40:12 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 01:13:45 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:31:39 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_components(char c)
 
 static void	lift_components_flag(t_components *components_flag, char c)
 {
-	if (c == C_ROAD)
+	if (c == C_WALL)
 		components_flag->wall |= EXIST;
 	else if (c == C_COLLECTIBLE)
 		components_flag->collectible |= EXIST;

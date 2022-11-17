@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 01:53:05 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 11:08:15 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:15:25 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	init_game_data(t_game *game)
 	init_mlx_pointer(game);
 	init_img_pointer(game);
 	init_move_count(game);
+	clear_list(&game->map_lst);
 }
