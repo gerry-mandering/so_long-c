@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 02:04:05 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 10:13:53 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:30:33 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ void	init_mlx_pointer(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
 	game->win_ptr = mlx_new_window(game->mlx_ptr, \
-		(game->map_size.col) * 32, (game->map_size.row) * 32, "Merry Christmas");
+	(game->map_size.col) * 32, (game->map_size.row) * 32, "Merry Christmas");
 }

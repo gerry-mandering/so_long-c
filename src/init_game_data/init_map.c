@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 02:07:38 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 03:22:01 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:30:15 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,4 @@ void	init_map(t_game *game)
 	labeling_wall(game->map, game->map_size);
 	labeling_tree(game->map, &game->map_lst, game->map_size);
 	labeling_obstacle(game->map, &game->map_lst);
-	for (int i = 0; i < game->map_size.row; i++)
-	{
-		for (int j = 0; j < game->map_size.col; j++)
-			ft_printf("%d", game->map[i][j]);
-		ft_printf("\n");
-	}
 }
