@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 21:39:11 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 11:09:47 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:39:32 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,27 @@
 
 // define KEY
 # define KEY_PRESS				2
-# define KEY_RELEASE			3
+# define KEY_EXIT				17
 # define KEY_W					13
 # define KEY_S					1
 # define KEY_A					0
 # define KEY_D					2
 # define KEY_ESC				53
 
+// define Components Existent
 # define NOT_EXIST				0
 # define EXIST					1
 
+// define Map Components
 # define C_ROAD					'0'
 # define C_WALL					'1'
 # define C_COLLECTIBLE			'C'
 # define C_EXIT					'E'
 # define C_PLAYER				'P'
+# define C_TREE					'T'
 # define C_FLOODED				'F'
 
+// define Collectible Label
 # define COLLECTIBLE			100
 
 # define TOTAL_LABELS			18
@@ -208,7 +212,7 @@ void	move_player_up(t_game *game, int **map, t_idx *player_pos);
 void	move_player_down(t_game *game, int **map, t_idx *player_pos);
 void	move_player_left(t_game *game, int **map, t_idx *player_pos);
 void	move_player_right(t_game *game, int **map, t_idx *player_pos);
-void	close_game(t_game *game);
+int		close_game(t_game *game);
 
 // collectible_floating_motion
 int		collectible_floating_motion(t_game *game);
