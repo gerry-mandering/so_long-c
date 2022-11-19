@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 00:40:12 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 12:31:39 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:38:19 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	lift_components_flag(t_components *components_flag, char c)
 	else if (c == C_EXIT)
 	{
 		if (components_flag->exit == EXIST)
-			ft_exit("duplicate exits\nError", STDERR_FILENO, EXIT_FAILURE);
+			ft_exit("Error\nduplicate exits", STDERR_FILENO, EXIT_FAILURE);
 		components_flag->exit |= EXIST;
 	}
 	else if (c == C_PLAYER)
 	{
 		if (components_flag->player == EXIST)
-			ft_exit("duplicate players\nError", STDERR_FILENO, EXIT_FAILURE);
+			ft_exit("Error\nduplicate players", STDERR_FILENO, EXIT_FAILURE);
 		components_flag->player |= EXIST;
 	}
 }
@@ -44,13 +44,13 @@ static void	lift_components_flag(t_components *components_flag, char c)
 static void	check_all_components_exist(t_components *components_flag)
 {
 	if (components_flag->wall == NOT_EXIST)
-		ft_exit("no wall in map\nError", STDERR_FILENO, EXIT_FAILURE);
+		ft_exit("Error\nno wall in map", STDERR_FILENO, EXIT_FAILURE);
 	else if (components_flag->collectible == NOT_EXIST)
-		ft_exit("no collectible in map\nError", STDERR_FILENO, EXIT_FAILURE);
+		ft_exit("Error\nno collectible in map", STDERR_FILENO, EXIT_FAILURE);
 	else if (components_flag->exit == NOT_EXIST)
-		ft_exit("no exit in map\nError", STDERR_FILENO, EXIT_FAILURE);
+		ft_exit("Error\nno exit in map", STDERR_FILENO, EXIT_FAILURE);
 	else if (components_flag->player == NOT_EXIST)
-		ft_exit("no player in map\nError", STDERR_FILENO, EXIT_FAILURE);
+		ft_exit("Error\nno player in map", STDERR_FILENO, EXIT_FAILURE);
 }
 
 void	validate_components(char **map, const t_idx map_size)
@@ -66,7 +66,7 @@ void	validate_components(char **map, const t_idx map_size)
 		while (idx.col < map_size.col)
 		{
 			if (!is_components(map[idx.row][idx.col]))
-				ft_exit("wrong components\nError", STDERR_FILENO, EXIT_FAILURE);
+				ft_exit("Error\nwrong components", STDERR_FILENO, EXIT_FAILURE);
 			lift_components_flag(&components_flag, map[idx.row][idx.col]);
 			idx.col++;
 		}

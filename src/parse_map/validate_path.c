@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 01:05:55 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/17 01:35:59 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:38:35 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	check_flooded(char **map, const t_idx map_size)
 		{
 			if (map[idx.row][idx.col] == C_COLLECTIBLE || \
 					map[idx.row][idx.col] == C_EXIT)
-				ft_exit("no valid path\nError", STDERR_FILENO, EXIT_FAILURE);
+				ft_exit("Error\nno valid path", STDERR_FILENO, EXIT_FAILURE);
 			idx.col++;
 		}
 		idx.row++;
