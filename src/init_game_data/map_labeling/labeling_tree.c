@@ -6,7 +6,7 @@
 /*   By: minseok2 <minseok2@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 02:47:01 by minseok2          #+#    #+#             */
-/*   Updated: 2022/11/18 14:40:09 by minseok2         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:50:19 by minseok2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	labeling_tree(int **map, t_list *map_lst, t_idx map_size)
 	t_idx	idx;
 	char	**map_chr;
 
-	count = 0;
 	idx.row = 1;
 	map_chr = copy_map_to_char_array(map_lst, map_size);
 	while (idx.row < map_size.row - 2)
@@ -60,11 +59,14 @@ void	labeling_tree(int **map, t_list *map_lst, t_idx map_size)
 		idx.col = 1;
 		while (idx.col < map_size.col - 1)
 		{
-			count = count_continuous_wall(map_chr, map_size, idx);
-			if (count == 2)
-				labeling_single_tree(map, map_chr, idx);
-			else if (count >= 3)
-				labeling_double_tree(map, map_chr, idx);
+			if (map_chr[idx.row][idx.col] == C_WALL)
+			{
+				count = count_continuous_wall(map_chr, map_size, idx);
+				if (count == 2)
+					labeling_single_tree(map, map_chr, idx);
+				else if (count >= 3)
+					labeling_double_tree(map, map_chr, idx);
+			}
 			idx.col++;
 		}
 		idx.row++;
